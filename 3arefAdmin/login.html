@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.4 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/custom.css">
+
+
+  </head>
+  <style>
+    *{
+      font-family: Cairo;
+      float: center!important;
+    }
+    .loginLogo{
+      max-width: 6%;
+    }
+   
+  </style>
+  <body class="login-page">
+    <div class="login-box">
+      <div class="login-logo text-center mt-5">
+        <a href="index.html"><img src="img/logo.png" class="loginLogo" alt=""></a>
+      </div><!-- /.login-logo -->
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="login-box-body col-sm-4" style="margin-left: 33.33333%;">
+            <h4 class="login-box-msg text-center">تسجييل الدخول</h4>
+              <div class="form-group has-feedback">
+                <input type="email" id="email" class="form-control" placeholder="Email">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+              </div>
+              <div class="form-group has-feedback">
+                <input type="password" id="password" class="form-control" placeholder="Password">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+              </div>
+              <div class="row">
+                
+                <div class="col-xs-12 text-center" style="margin-left: 25%">
+                  <button type="submit" onclick="login()" class="btn btn-primary w-50 btn-block btn-flat">تسجييل الدخول </button>
+                </div><!-- /.col -->
+
+                <div class="col-xs-8">
+                  <div class="checkbox icheck">
+                    <label>
+                      <input type="checkbox" id="keepLogin"> البقاء قيد التسجيل
+                    </label>
+                  </div>
+                </div><!-- /.col -->
+                <div class="col-xs-12" id="error" hidden>
+                  <div class="checkbox icheck">
+                    <label class="text-center text-danger w-100">
+                         كلمة المرور أو البريد الاليكتروني غير صحيح
+                    </label>
+                  </div>
+                </div><!-- /.col -->
+              </div>  
+    
+    
+          </div><!-- /.login-box-body -->
+        </div>
+      </div>
+
+    </div><!-- /.login-box -->
+
+    <!-- jQuery 2.1.4 -->
+    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.4 -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="plugins/iCheck/icheck.min.js"></script>
+    <script>
+      $(function () {
+        $('input').iCheck({
+          checkboxClass: 'icheckbox_square-blue',
+          radioClass: 'iradio_square-blue',
+          increaseArea: '20%' // optional
+        });
+      });
+    </script>
+    <script>
+      
+      function login(){
+        const e = 'aa123@mail.com'
+        const p = '123'
+        var email = $("#email").val()
+        var password = $("#password").val()
+        if(email == e&& password==p){
+          window.location.href = "index.html"
+        }else{
+          $("#error").removeAttr('hidden')
+          if($("#keepLogin").is(':checked')){
+      }
+        }
+      }
+    </script>
+  </body>
+</html>

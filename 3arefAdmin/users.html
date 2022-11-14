@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.4 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="css/skins/_all-skins.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+  </head>
+  <body class="skin-blue sidebar-mini"  dir="rtl" onload="getUsers()">
+    <div id="loader" class="h4 text-danger text-center">
+      <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+      <div class="text-center">جاري التحميل </div>
+    </div>    
+    <div class="wrapper">
+      <header class="main-header">
+
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>3aref </b>- Admin</span>
+        </a>
+
+       <!--Cut Nav -->
+      </header>
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+          <!-- Sidebar user panel -->
+          <div class="user-panel">
+            <div class="pull-left image">
+              <img src="img/user-alt.png" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+              <p id="loggedUser"></p>
+            </div>
+          </div>
+          <!-- search form -->
+          <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+              <input type="text" name="q" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+              </span>
+            </div>
+          </form>
+          <!-- /.search form -->
+          <!-- sidebar menu: : style can be found in sidebar.less -->
+          <ul class="sidebar-menu">
+            <li class=" treeview tr">
+              <a href="index.html">
+                <i class="fa fa-dashboard"></i><span>الرئيسية</span>
+              </a>
+            </li>
+            <li class="active treeview tr">
+              <a href="users.html">
+                 <i class="fa fa-users"></i><span>العملاء</span>
+              </a>
+            </li>
+            <li class="treeview tr">
+              <a href="admins.html">
+                <i class="fa fa-laptop"></i><span>السئولين</span> 
+              </a>
+            </li>
+            <li class="treeview tr">
+              <a href="commentsReports.html">
+                <i class="fa fa-th"></i><span>بلاغات التعليقات</span>
+              </a>
+            </li>
+            <li class="treeview tr">
+              <a href="verifyRequests.html">
+                <i class="fa fa-files-o"></i> <span>طلبات التوثيق</span>
+              </a>
+            </li>
+            <li class="treeview tr">
+              <a href="verifiedUsers.html">
+                <i class="fa fa-check"></i><span> الحسابات الموثقة</span> 
+              </a>
+            </li>
+           
+          </ul>
+        </section>
+        <!-- /.sidebar -->
+      </aside>
+
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            العملاء 
+            
+          </h1>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+              
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">جميع العملاء</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th class="tr">الأسم</th>
+                        <th class="tr">الهاتف</th>
+                        <th class="tr">المحافظة</th>
+                        <th class="tr">العنوان</th>
+                        <th class="tr">التخصص</th>
+                        <th class="tr">المهنة</th>
+                        <th class="tr">العملية</th>
+                      </tr>
+                    </thead>
+                    <tbody id="UsersTableBody">
+                     
+                    </tbody>
+                    
+                  </table>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+     <!-- The modal -->
+<div class="modal fade modal-danger" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">مسح عميل </h4>
+      </div>
+      <div class="modal-body">
+        <h3>هل انت متأكد انك تريد حذف هذا العميل</h3>
+        <p>عند حذف هذا المستخدم سيتم حذف جميع التعليقات والصور المرتبطة به</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">إلغاء</button>
+        <button type="button" class="btn btn-outline" onclick="deleteVerified()">نعم حذف </button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+  </div>
+  
+
+    <!-- jQuery 2.1.4 -->
+    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.4 -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- DataTables -->
+    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="js/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="js/demo.js"></script>
+    <script src="js/custom/home.js"></script>
+    <!-- page script -->
+    <script>
+      
+      $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
+// Initialize popover component
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+    </script>
+  </body>
+</html>
