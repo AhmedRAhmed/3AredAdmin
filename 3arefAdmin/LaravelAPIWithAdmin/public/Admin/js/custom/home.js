@@ -170,17 +170,20 @@ if(nPassword===confirmNPassword){
 }
 }
 function createAdmin(){
-let type = document.querySelector('input[name="r3"]:checked').value;
-let FullName = $("#name").val()
-let Phone = $("#phone").val()
-let password = $("#password").val()
+let Role = document.querySelector('input[name="r3"]:checked').value;
+let UserName = $("#userName").val()
+let Password = $("#password").val()
     // console.log(type + FullName + Phone + password);
 
-    let newUser = {id:null, FullName:FullName, Phone:Phone, password:password,Type:type}
+    let newUser = {
+        "UserName": UserName,
+        "Password": Password,
+        "Role": Role,
+      }
 
     $.ajax({
         type: 'POST',
-        url: "js/custom/admins.json",
+        url: url+"Accounts/"+newUser,
         dataType: "JSON",
         data:newUser,
         success: function (data) {
