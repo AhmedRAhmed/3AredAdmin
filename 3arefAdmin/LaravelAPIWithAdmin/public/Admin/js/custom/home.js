@@ -180,7 +180,7 @@ let Password = $("#password").val()
         "Password": Password,
         "Role": Role,
       }
-
+console.log(newUser);
     $.ajax({
         type: 'POST',
         url: url+"Accounts/"+newUser,
@@ -447,6 +447,12 @@ function getVerified(){
         
         loader()
     }
-    
     // *********** End show Request ***********
-    
+    function acceptRequest(){
+        let pageUrl = window.location.search;
+        let userId = pageUrl.match(/id=([^&]+)/)[1];
+    }
+    function denyRequest(){
+        let pageUrl = window.location.search;
+        let userId = pageUrl.match(/id=([^&]+)/)[1];
+    }
