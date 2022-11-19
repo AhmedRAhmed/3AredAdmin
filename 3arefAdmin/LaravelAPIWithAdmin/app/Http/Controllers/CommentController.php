@@ -17,7 +17,7 @@ class CommentController extends Controller
     public function index()
     {
         $Comments = comment::where('CommentFlag', 1)->get();
-        return response()->json($Comments,200);
+        return response()->json($Comments, 200);
     }
 
     public function ReportComment($id)
@@ -55,7 +55,8 @@ class CommentController extends Controller
      */
     public function store(StorecommentRequest $request)
     {
-        //
+        $Comment =  comment::create($request->all());
+        return response()->json($Comment, 201);
     }
 
     /**
@@ -91,7 +92,7 @@ class CommentController extends Controller
     {
         //
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *

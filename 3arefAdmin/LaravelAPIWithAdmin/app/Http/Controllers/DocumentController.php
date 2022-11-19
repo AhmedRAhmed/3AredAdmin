@@ -15,7 +15,7 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        //
+        return document::all();
     }
 
     /**
@@ -36,7 +36,8 @@ class DocumentController extends Controller
      */
     public function store(StoredocumentRequest $request)
     {
-        //
+        $Document =  document::create($request->all());
+        return response()->json($Document, 201);
     }
 
     /**
@@ -68,9 +69,11 @@ class DocumentController extends Controller
      * @param  \App\Models\document  $document
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatedocumentRequest $request, document $document)
+    public function update(UpdatedocumentRequest $request, $id)
     {
-        //
+        $Document = document::findOrFail($id);
+        $Document->update($request->all());
+        return response()->json($Document, 200);
     }
 
     /**
