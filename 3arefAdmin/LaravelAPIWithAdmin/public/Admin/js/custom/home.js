@@ -85,23 +85,23 @@ var users = 654165
           });
           loader()
     }
-    let UserId 
-    
+   
+    var normalUserId 
     function getGallery(id){
         window.location.href = "userGallery.html?id="+id
     }
     function getUserID(id){
-        userID = id
+        normalUserId = id
     }
     function deleteUser() {
     $.ajax({
         type: 'DELETE',
-        url: "js/custom/users.json",
+        url: url+"Clients/"+normalUserId,
         dataType: "JSON",
-        data:userID,
         success: function (data) {
+        document.getElementById("close").click();
             alert("تم حذف العميل")
-            $("#" + userID).remove()
+            $("#" + normalUserId).remove()
         }, error: function (response) {
             console.log(response);
         }
@@ -155,9 +155,10 @@ function showAdmins(data) {
     
       loader()
 }
-let userID
+var adId
 function getAdminID(id){
- userID = id
+    adId = id
+ 
 }
 
 function updatePassword(){
@@ -196,7 +197,17 @@ console.log(newUser);
 
 }
 function deleteAdmin() {
-    $("#" + userID).remove()
+    $.ajax({
+        type: 'DELETE',
+        url: url+"Accounts/"+adId,
+        dataType: "JSON",
+        success: function (data) {
+            alert("تم حذف العميل")
+            $("#" + adId).remove()
+        }, error: function (response) {
+            console.log(response);
+        }
+    });
 }
 // })
 
@@ -255,7 +266,17 @@ function ignoreReport(){
     console.log('shit');
 }
 function deleteComment() {
-    $("#" + commentID).remove()
+    $.ajax({
+        type: 'DELETE',
+        url: url+"Comments/"+commentID,
+        dataType: "JSON",
+        success: function (data) {
+            alert("تم حذف التعليق")
+            $("#" + adId).remove()
+        }, error: function (response) {
+            console.log(response);
+        }
+    });
 }
     // *********** END Reported Comments ***********
     // *********** Start Verification Requests ***********
@@ -362,7 +383,7 @@ function getVerified(){
           });
           loader()
     }
-    let verifiedId 
+    var verifiedId 
     
     function showGallery(id){
         window.location.href = "userGallery.html?id="+id
@@ -371,18 +392,17 @@ function getVerified(){
         verifiedId = id
     }
     function deleteVerified() {
-    $.ajax({
-        type: 'DELETE',
-        url: "js/custom/users.json",
-        dataType: "JSON",
-        data:userID,
-        success: function (data) {
-            alert("تم حذف العميل")
-            $("#" + userID).remove()
-        }, error: function (response) {
-            console.log(response);
-        }
-    });
+        $.ajax({
+            type: 'DELETE',
+            url: url+"Clients/"+verifiedId,
+            dataType: "JSON",
+            success: function (data) {
+                alert("تم حذف العميل")
+                $("#" + verifiedId).remove()
+            }, error: function (response) {
+                console.log(response);
+            }
+        });
     }
     // *********** End Verified ***********
     // *********** Start show Request ***********
@@ -451,6 +471,18 @@ function getVerified(){
     function acceptRequest(){
         let pageUrl = window.location.search;
         let userId = pageUrl.match(/id=([^&]+)/)[1];
+        //`${environment.APIURl}/Clients/UpdateCustom/` + id,
+        //{"T":"Verified"}
+
+            $.ajax({
+                type: 'GET',
+                url:  url+"/Clients/UpdateCustom/"+userId,
+                dataType: "JSON",
+                success: function (data) {            
+                }, error: function (response) {
+                    console.log(response);
+                }
+            });
     }
     function denyRequest(){
         let pageUrl = window.location.search;
