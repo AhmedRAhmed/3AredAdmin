@@ -66,6 +66,7 @@ Route::resource('Clients', ClientController::class);
 Route::get('/Clients/ShowComment/{id}', [ClientController::class, 'showComment']);
 Route::get('/Clients/showVerifiedRequest/{id}', [ClientController::class, 'showVerifiedRequest']);
 Route::post('/Clients/Login', [ClientController::class, 'Login']);
+Route::post('/Clients/Search', [ClientController::class, 'Search']);
 Route::put('/Clients/UpdateCustom/{id}', [ClientController::class, 'UpdateCustom']);
 Route::put('/Clients/ChangePassword/{id}', [ClientController::class, 'ChangePassword']);
 Route::resource('Comments', CommentController::class);

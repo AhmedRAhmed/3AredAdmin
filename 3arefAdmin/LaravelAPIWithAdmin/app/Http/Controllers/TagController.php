@@ -80,8 +80,10 @@ class TagController extends Controller
      * @param  \App\Models\tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(tag $tag)
+    public function destroy($id)
     {
-        //
+        $Tag = tag::findOrFail($id);
+        $Tag->delete();
+        return response()->json(null, 204);
     }
 }

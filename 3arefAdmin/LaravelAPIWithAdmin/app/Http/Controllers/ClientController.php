@@ -22,6 +22,24 @@ class ClientController extends Controller
     {
         return Client::all();
     }
+    
+    public function AcceptVerified($id)
+    {
+        $Client1 = Client::findOrFail($id);
+        $Client = DB::table('clients')
+            ->where('id', $id)
+            ->update(['Verified' => 1]);
+        return response()->json($Client, 200);
+    }
+
+    public function RejectVerified($id)
+    {
+        $Client1 = Client::findOrFail($id);
+        $Client = DB::table('clients')
+            ->where('id', $id)
+            ->update(['Verified' => 0]);
+        return response()->json($Client, 200);
+    }
     /**
      * Display the specified resource.
      *
@@ -43,6 +61,7 @@ class ClientController extends Controller
         }
         return response()->json($R,200);
     }
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -101,6 +120,27 @@ class ClientController extends Controller
         $Client = DB::table('clients')
             ->where('Phone', $Phone)
             ->where('Password', $Password)
+            ->get();
+        if (!$Client->isEmpty()) {
+            return response()->json($Client, 200);
+        } else {
+            return response()->json($Client, 404);
+        }
+    }
+    public function Search(StoreClientRequest $request){
+        $FullName = $request->input('FullName');
+        $Bio = $request->input('Bio');
+        $Governorate = $request->input('Governorate');
+        $City = $request->input('City');
+        $Job = $request->input('Job');
+        $JobTitle = $request->input('JobTitle');
+        $Client = DB::table('clients')
+            ->where('FullName',"like", "%".$FullName."%")
+            ->where('Bio',"like", "%".$Bio."%")
+            ->where('Governorate',"like", "%".$Governorate."%")
+            ->where('City',"like", "%".$City."%")
+            ->where('Job',"like", "%".$Job."%")
+            ->where('JobTitle',"like", "%".$JobTitle."%")
             ->get();
         if (!$Client->isEmpty()) {
             return response()->json($Client, 200);
