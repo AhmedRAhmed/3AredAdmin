@@ -129,14 +129,12 @@ class ClientController extends Controller
     }
     public function Search(StoreClientRequest $request){
         $FullName = $request->input('FullName');
-        $Bio = $request->input('Bio');
         $Governorate = $request->input('Governorate');
         $City = $request->input('City');
         $Job = $request->input('Job');
         $JobTitle = $request->input('JobTitle');
         $Client = DB::table('clients')
             ->where('FullName',"like", "%".$FullName."%")
-            ->where('Bio',"like", "%".$Bio."%")
             ->where('Governorate',"like", "%".$Governorate."%")
             ->where('City',"like", "%".$City."%")
             ->where('Job',"like", "%".$Job."%")
@@ -145,7 +143,7 @@ class ClientController extends Controller
         if (!$Client->isEmpty()) {
             return response()->json($Client, 200);
         } else {
-            return response()->json($Client, 404);
+            return response()->json($Client, 200);
         }
     }
     /**
