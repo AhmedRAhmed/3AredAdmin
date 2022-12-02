@@ -91,7 +91,7 @@
             </li>
             <li class="treeview tr">
               <a href="admins.html">
-                <span>السئولين</span> <i class="fa fa-laptop"></i>
+                <span>المسئوليين</span> <i class="fa fa-laptop"></i>
               </a>
             </li>
             <li class="treeview tr">
@@ -196,6 +196,14 @@
     <script src="js/demo.js"></script>
 
     <!-- =============================================== -->
-    <script src="js//custom/home.js"></script>
+    <script src="js/custom/home.js"></script>
+    <script>
+      if (localStorage.getItem("loggedUser") != null) {
+        window.location.href = "index.html";
+                    }
+                if (logged) {
+                  window.location.href = "login.html";
+                }
+    </script>
   </body>
 </html>
