@@ -1,14 +1,15 @@
 var url = 'https://laravel.3arefapp.com/public/api/';
+let user =  JSON.parse(localStorage.getItem("loggedUser"));
+
 function checkLogin(func){
-    
-   let user =  JSON.parse(localStorage.getItem("loggedUser"));
    if (user == null || user=='') {
     window.location.href ='login.html'
    }
-   func()
-
+   console.log(user);
    var loggedUser = user.UserName
-$("#loggedUser").html(loggedUser)  
+   $("#loggedUser").html(loggedUser)
+   func()
+    
 }
 
 function logout(){
@@ -68,22 +69,22 @@ function logout(){
             dataType: "JSON",
             success: function (verified) {
                 countV(verified)
+                $("#verified").html(countV(verified))
             }, error: function (response) {
                 console.log(response);
             }
         });
-
-        // $("#requestsCount").html(requests);
+;
     }
 
 function countV(verified){
     let countVerified = 0
-    for (var i in verified) {
-        if(data[i].Verified == "1"){
+    for (let i in verified) {
+        if(verified[i].Verified == "1"){
             countVerified +=1
         }
     }
-    $("#verified").html(countVerified);
+    return countVerified;
 }
     // *********** END HOME ***********
     // *********** START USERS ***********
@@ -234,7 +235,7 @@ let Password = $("#password").val()
 console.log(newUser);
     $.ajax({
         type: 'POST',
-        url: url+"Accounts/"+newUser,
+        url: url+"Accounts",
         dataType: "JSON",
         data:newUser,
         success: function (data) {
@@ -312,7 +313,17 @@ function getCommentID(id){
     commentID = id
 }
 function ignoreReport(){
-    $("#" + commentID).remove()
+    $.ajax({
+        type: 'PUT',
+        url:  url+"/Comments/ReportIgnore/"+commentID,
+        dataType: "JSON",
+        success: function (data) { 
+            alert('تم تجاهل البلاغ') 
+            $("#" + commentID).remove()
+        }, error: function (response) {
+            console.log(response);
+        }
+    });
     console.log('shit');
 }
 function deleteComment() {
@@ -521,14 +532,14 @@ function getVerified(){
     function acceptRequest(){
         let pageUrl = window.location.search;
         let userId = pageUrl.match(/id=([^&]+)/)[1];
-        //`${environment.APIURl}/Clients/UpdateCustom/` + id,
-        //{"T":"Verified"}
 
             $.ajax({
-                type: 'GET',
+                type: 'PUT',
                 url:  url+"/Clients/UpdateCustom/"+userId,
                 dataType: "JSON",
-                success: function (data) {            
+                success: function (data) { 
+                    alert('تم التوثيق') 
+                    window.location.href ='verifyRequests.html'  
                 }, error: function (response) {
                     console.log(response);
                 }
