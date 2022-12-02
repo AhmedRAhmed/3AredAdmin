@@ -1,7 +1,21 @@
 var url = 'https://laravel.3arefapp.com/public/api/';
+function checkLogin(func){
+    
+   let user =  JSON.parse(localStorage.getItem("loggedUser"));
+   if (user == null || user=='') {
+    window.location.href ='login.html'
+   }
+   func()
 
-var loggedUser = 'Ahmed R'
-$("#loggedUser").html(loggedUser)    
+   var loggedUser = user.UserName
+$("#loggedUser").html(loggedUser)  
+}
+
+function logout(){
+    localStorage.clear();
+    window.location.href ='login.html'
+}
+  
     function loader(){
         document.onreadystatechange = function() {
             if (document.readyState !== "complete") {
@@ -26,15 +40,51 @@ $("#loggedUser").html(loggedUser)
         };
 
     // *********** START HOME ***********
-var users = 654165
-    var requests = 8565
-    var comments = 15150
-    var verified = 5654
-    $("#usersCount").html(users);
-    $("#requestsCount").html(requests);
-    $("#commentsCount").html(comments);
-    $("#verified").html(verified);
+    function indexC(){
+        $.ajax({
+            type: 'GET',
+            url: url+"Clients",
+            dataType: "JSON",
+            success: function (data) {
+                $("#usersCount").html(data.length);
+            }, error: function (response) {
+                console.log(response);
+            }
+        });
 
+        $.ajax({
+            type: 'GET',
+            url: url+"Comments",
+            dataType: "JSON",
+            success: function (data) {
+                $("#commentsCount").html(data.length);
+            }, error: function (response) {
+                console.log(response);
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            url: url+"Clients",
+            dataType: "JSON",
+            success: function (verified) {
+                countV(verified)
+            }, error: function (response) {
+                console.log(response);
+            }
+        });
+
+        // $("#requestsCount").html(requests);
+    }
+
+function countV(verified){
+    let countVerified = 0
+    for (var i in verified) {
+        if(data[i].Verified == "1"){
+            countVerified +=1
+        }
+    }
+    $("#verified").html(countVerified);
+}
     // *********** END HOME ***********
     // *********** START USERS ***********
     function getUsers(){

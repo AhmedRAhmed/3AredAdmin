@@ -132,11 +132,15 @@
             });
         </script>
         <script>
+var url = 'https://laravel.3arefapp.com/public/api/';
+
             var logged;
             var loggedUser
+            var User
+            var password
             function login() {
-                var User = $("#email").val();
-                var password = $("#password").val();
+                 User = $("#email").val();
+                     password = $("#password").val();
 
                 $.ajax({
                     type: "GET",
@@ -159,7 +163,9 @@
                     ) {
                       loggedUser = data[i]
                         logged = true;
+                        console.log(loggedUser);
                     } else {
+                        console.log(data[i].UserName +'/'+data[i].Password);
                         logged = false;
                     }
                 }
@@ -170,6 +176,7 @@
                   localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
                     }
                 if (logged) {
+                  localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
                   window.location.href = "index.html";
                 }
             }

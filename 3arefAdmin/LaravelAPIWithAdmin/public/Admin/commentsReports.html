@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="css/custom.css">
 
   </head>
-  <body class="skin-blue sidebar-mini"  dir="rtl" onload="getReported()">
+  <body class="skin-blue sidebar-mini"  dir="rtl" onload="checkLogin(getReported)">
     <div id="loader" class="h4 text-danger text-center">
       <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
       <div class="text-center">جاري التحميل </div>
@@ -50,8 +50,9 @@
             <div class="pull-left image">
               <img src="img/user-alt.png" class="img-circle" alt="User Image">
             </div>
-            <div class="pull-left info">
-              <p id="loggedUser"></p>
+           <div class="">
+              <p id="loggedUser" style="color: white;"></p>
+              <p class="btn btn-sm btn-danger px-3" onclick="logout()">Logout</p>
             </div>
           </div>
           <!-- search form -->
