@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Users</title>
+    <title>Govern</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.4 -->
@@ -13,22 +13,24 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="../../plugins/iCheck/all.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/custom.css">
 
   </head>
-  <body class="skin-blue sidebar-mini"  dir="rtl" onload="checkLogin(getUsers)">
+  <body class="skin-blue sidebar-mini"  dir="rtl" onload="checkLogin(getGovern)">
     <div id="loader" class="h4 text-danger text-center">
       <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
       <div class="text-center">جاري التحميل </div>
-    </div>    
+    </div>
     <div class="wrapper">
       <header class="main-header">
 
@@ -50,9 +52,8 @@
             <div class="pull-left image">
               <img src="img/user-alt.png" class="img-circle" alt="User Image">
             </div>
-            <div class="">
-              <p id="loggedUser" style="color: white;"></p>
-              <p class="btn btn-sm btn-danger px-3" onclick="logout()">Logout</p>
+            <div class="pull-left info">
+              <p id="loggedUser"></p>
             </div>
           </div>
           <!-- search form -->
@@ -72,12 +73,12 @@
                 <i class="fa fa-dashboard"></i><span>الرئيسية</span>
               </a>
             </li>
-            <li class="active treeview tr">
+            <li class=" treeview tr">
               <a href="users.html">
                  <i class="fa fa-users"></i><span>العملاء</span>
               </a>
             </li>
-            <li class="treeview tr">
+            <li class="active treeview tr">
               <a href="admins.html">
                 <i class="fa fa-laptop"></i><span>المسئولين</span> 
               </a>
@@ -127,9 +128,9 @@
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>
-            العملاء 
-            
+          <h1> 
+            المحافظات 
+            <button class="btn btn-md btn-success" data-toggle="modal" data-target="#create">إنشاء محافظة</button>
           </h1>
         </section>
 
@@ -140,25 +141,19 @@
               
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">جميع العملاء</h3>
+                  <h3 class="box-title">جميع المحافظات</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th class="tr">الأسم</th>
-                        <th class="tr">الهاتف</th>
-                        <th class="tr">المحافظة</th>
-                        <th class="tr">العنوان</th>
-                        <th class="tr">التخصص</th>
-                        <th class="tr">المهنة</th>
                         <th class="tr">العملية</th>
                       </tr>
                     </thead>
-                    <tbody id="UsersTableBody">
+                    <tbody id="governTableBody">
                      
                     </tbody>
-                    
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
@@ -167,24 +162,69 @@
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
      <!-- The modal -->
-<div class="modal fade modal-danger" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade modal-danger" id="delete" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">مسح عميل </h4>
+        <h4 class="modal-title">مسح محافظة </h4>
       </div>
       <div class="modal-body">
-        <h3>هل انت متأكد انك تريد حذف هذا العميل</h3>
-        <p>عند حذف هذا المستخدم سيتم حذف جميع التعليقات والصور المرتبطة به</p>
+        <h3>هل انت متأكد انك تريد حذف هذة المحافظة</h3>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline pull-left" id="close" data-dismiss="modal">إلغاء</button>
-        <button type="button" class="btn btn-outline" onclick="deleteUser()">نعم حذف </button>
+        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">إلغاء</button>
+        <button type="button" class="btn btn-outline" onclick="deleteGovern()" data-dismiss="modal">نعم حذف </button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
   </div>
-  
+
+
+  <div class="modal fade modal-primary" id="create" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">انشاء محافظة </h4>
+        </div>
+        <div class="modal-body">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="governName">اسم المحافظة </label>
+              <input type="text" class="form-control" id="governName" placeholder="اسم المحافظة ">
+            </div>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">إلغاء</button>
+          <button type="button" class="btn btn-primary px-5" onclick="createGovern()" data-dismiss="modal"> إنشاء </button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+    </div>
+</div>
+
+<div class="modal fade modal-primary" id="update" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"> تعديل محافظة </h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="governNewName"> أسم المحافظة  </label>
+            <input type="text" class="form-control" id="governNewName" placeholder="أسم المحافظة ">
+          </div>
+        </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">إلغاء</button>
+        <button type="button" class="btn btn-primary px-5" onclick="updateGovern()"> حفظ </button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+  </div>
+</div>
 
     <!-- jQuery 2.1.4 -->
     <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
@@ -201,11 +241,11 @@
     <script src="js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="js/demo.js"></script>
-    <script src="js/custom/home.js"></script>
+    <!-- <script src="js/custom/home.js"></script> -->
+    <script src="js/custom/mainData.js"></script>
     <!-- page script -->
-    
     <script>
-      
+     
       $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
